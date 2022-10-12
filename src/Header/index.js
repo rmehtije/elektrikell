@@ -6,9 +6,14 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 function Header(props) {
 
     const radios = [
-        { name: 'High price', value: '1' },
-        { name: 'Low Price', value: '2' },
+        { name: 'Low Price', value: 'low' },
+        { name: 'High price', value: 'high' },
     ];
+
+    function handleOnChange(event) {
+        // event.preventDefault();
+        props.setRadioValue(event.currentTarget.value);
+    }
 
     return (
         <>
@@ -24,11 +29,11 @@ function Header(props) {
                                 key={idx}
                                 id={`radio-${idx}`}
                                 type="radio"
-                                variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+                                variant={idx % 2 ? 'outline-danger' : 'outline-success'}
                                 name="radio"
                                 value={radio.value}
                                 checked={props.radioValue === radio.value}
-                                onChange={(e) => props.setRadioValue(e.currentTarget.value)}
+                                onChange={handleOnChange}
                             >
                                 {radio.name}
                             </ToggleButton>
