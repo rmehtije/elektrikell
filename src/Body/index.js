@@ -48,7 +48,7 @@ const data = [
 ];
 
 function Body() {
-    
+    console.log('render Body');
     return (
         <Row>
             <Col>

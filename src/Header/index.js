@@ -4,7 +4,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
 function Header(props) {
-
+    console.log('render Header');
     const radios = [
         { name: 'Low Price', value: 'low' },
         { name: 'High price', value: 'high' },

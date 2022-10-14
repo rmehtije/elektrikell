@@ -6,7 +6,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import Countdown from 'react-countdown';
 
 function Low({ hourValue, setHourValue }) {
-
+    console.log('Render LowCompomnet');
     const endOfDay = new Date().setHours(23, 59, 59, 999);
     const [showElement, setShowElement] = useState('countdown');
     const [time, setTime] = useState(endOfDay);
@@ -20,7 +20,10 @@ function Low({ hourValue, setHourValue }) {
         { label: '8h', value: '8' },
     ];
 
+    // object sobitija (event) derzhqt v sebe informaciju o elemente nad kotorqm bqlo soversheno dejstvije
     function handleOnChange(event) {
+        console.log('event.target', event.target);
+        console.log('event.currentTarget', event.currentTarget);
         const hour = event.currentTarget.value;
         const newDate = new Date().setHours(23 - hour, 59, 59, 999);
         if(newDate - Date.now() <= 0) {
@@ -32,6 +35,11 @@ function Low({ hourValue, setHourValue }) {
         setHourValue(event.currentTarget.value);
     }
 
+    // onChange = trigger sobitija.
+    // Sobitije k nam prihodit ot brauzera a k brauzeru prihodit ot pol'zovatelja.
+    // onChange zapuskajetsa kogda pol'zovatel' sdelal izmenenija v input elementah.(radio button)
+    // onChange zapuskajet funkcqii kotoryh mq nazqvajem obrabotchikami. V obrabotchink trigger sobitija otprovljajet object sobitja (event)
+    // triggery sobitij vsegda nachenajutsa s 'on'
     return (
         <>
             <Row>
