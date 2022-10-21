@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import Countdown from 'react-countdown';
+import moment from 'moment';
 
-function Low({ hourValue, setHourValue }) {
+function Low({ hourValue, setHourValue, bestTimeRange, currentPrice }) {
 
-    const endOfDay = new Date().setHours(23, 59, 59, 999);
     const [showElement, setShowElement] = useState('countdown');
-    const [time, setTime] = useState(endOfDay);
+    const [time, setTime] = useState(new Date());
 
     const cheapHours = [
         { label: '1h', value: 1 },
@@ -20,15 +20,19 @@ function Low({ hourValue, setHourValue }) {
         { label: '8h', value: 8 },
     ];
 
+    useEffect(() => {
+        const countDownUntil = moment.unix(bestTimeRange.timestamp).toDate();
+        setTime(countDownUntil);
+    }, [bestTimeRange]);
+
     function handleOnChange(event) {
         const hour = event.currentTarget.value;
-        const newDate = new Date().setHours(23 - hour, 59, 59, 999);
-        if(newDate - Date.now() <= 0) {
-            setShowElement('right now');
-        } else {
+
+        if(bestTimeRange.timestamp > moment().unix()) {
             setShowElement('countdown');
+        } else {
+            setShowElement('right now');
         }
-        setTime(newDate);
         setHourValue(+hour);
     }
 
@@ -54,15 +58,17 @@ function Low({ hourValue, setHourValue }) {
                 </Col>
             </Row>
             <Row>
-                <Col>Parim aeg selleks on 0:00st 1:00ni, milleni on jäänud</Col>
+                <Col>Parim aeg selleks on {`${bestTimeRange.from}:00st ${bestTimeRange.until}:00ni`}, milleni on jäänud</Col>
             </Row>
             <Row>
                 <Col>
-                    {showElement === 'countdown' ? <Countdown date={time} /> : <h3>Right Now!</h3>}
+                    {showElement === 'countdown' ? <Countdown date={time} autoStart={true}/> : <h3>Right Now!</h3>}
                 </Col>
             </Row>
             <Row>
-                <Col>Siis on kilovatt-tunni hind 11.30 senti, mis on 75% odavam kui praegu</Col>
+                <Col>Siis on kilovatt-tunni hind {bestTimeRange.bestPrice} eur, 
+                    mis on {Math.round(100 - bestTimeRange.bestPrice / currentPrice * 100)}% odavam kui praegu
+                </Col>
             </Row>
         </>
     );
