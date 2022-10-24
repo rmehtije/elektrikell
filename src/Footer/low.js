@@ -20,6 +20,14 @@ function Low({ hourValue, setHourValue, bestTimeRange, currentPrice }) {
         { label: '8h', value: 8 },
     ];
 
+    // useEffect - react hook kotoryj zapuskaetsja posle togo kak ves' komponent vypolnel render
+    // useEffect prinemajet dva argumenta
+    // 1 argument eto callback funkcija kotoraja zapuskajetsa pri...
+    // 2 argument massive iz zavisemostej.
+    // zaisemosti eto peremennqje kotorqje ispol'zujutsja v callback funkcqii
+    // zavisemosti pri izmenii zapuskajut callback funkcqiju zanogo
+    // ostaviv pustoj massive v zavisemostjah tq garantirujesh 4to callback funkcija zapustitsja tol'ko odin raz 
+    // dazhe pri izmeneii state, pri uslovii 4to v callbackfunkcqii tq state ne izpol'zujesh.
     useEffect(() => {
         const countDownUntil = moment.unix(bestTimeRange.timestamp).toDate();
         setTime(countDownUntil);
