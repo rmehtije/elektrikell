@@ -55,7 +55,7 @@ function Header({
 
     return (
         <>
-            <Row>
+            <Row className="mt-2">
                 <Col><h3>Elektrikell</h3></Col>
                 <Col>
                     <DropdownButton
@@ -64,6 +64,7 @@ function Header({
                         variant="secondary"
                         onSelect={handleOnSelectCountry}
                         title={selectedCountry.title}
+                        className="float-end"
                     >
                         {countries.map(country => <Dropdown.Item key={country.key} eventKey={country.key}>{country.title}</Dropdown.Item>)}
 
