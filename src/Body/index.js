@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setBestTimeRange, setWorstTimeRange } from '../services/stateService';
 
 function Body() {
-    console.log('Body render');
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState(null);
@@ -77,7 +76,6 @@ function Body() {
                         worstPrice: futureData[areaPrices[0].i].y,
                     }));
                 }
-                console.log('test');
                 setX1(9 + areaPrices[0].i);
                 const x2 = 9 + areaPrices[0].i + hourValue;
                 setX2(x2);

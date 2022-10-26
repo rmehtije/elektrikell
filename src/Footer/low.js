@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setHourValue } from '../services/stateService';
 
 function Low() {
-    console.log('Low render');
     const [showElement, setShowElement] = useState('countdown');
     const [time, setTime] = useState(null);
     const hourValue = useSelector((state) => state.hourValue);

@@ -5,7 +5,6 @@ import Body from './Body';
 import Footer from './Footer';
 
 function App() {
-  console.log('App render');
   return (
     <Container>
       <Header />

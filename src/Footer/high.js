@@ -3,7 +3,6 @@ import Col from 'react-bootstrap/Col';
 import { useSelector } from 'react-redux';
 
 function High() {
-    console.log('High render');
     const currentPrice = useSelector((state) => state.currentPrice);
     const worstTimeRange = useSelector((state) => state.worstTimeRange);
     return (

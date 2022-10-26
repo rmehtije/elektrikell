@@ -4,7 +4,6 @@ import './footer.scss';
 import { useSelector } from 'react-redux';
 
 function Footer(props) {
-    console.log('Footer render');
     const radioValue = useSelector((state) => state.radioValue);
 
     return (
