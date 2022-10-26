@@ -5,15 +5,11 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { getPriceData } from '../services/apiService';
 import ErrorModal from '../ErrorModal';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBestTimeRange, setWorstTimeRange } from '../services/stateService';
 
-function Body({
-    radioValue,
-    hourValue,
-    setBestTimeRange,
-    setWorstTimeRange,
-    selectedCountry,
-}) {
-
+function Body() {
+    console.log('Body render');
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState(null);
@@ -21,6 +17,10 @@ function Body({
     const [hourNowI, setHourNowI] = useState(0);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
+    const hourValue = useSelector((state) => state.hourValue);
+    const radioValue = useSelector((state) => state.radioValue);
+    const selectedCountry = useSelector((state) => state.selectedCountry);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         (async function () {
@@ -63,21 +63,21 @@ function Body({
                 });
                 areaPrices.sort((a, b) => a.result - b.result);
                 if (radioValue === 'low') {
-                    setBestTimeRange({
+                    dispatch(setBestTimeRange({
                         from: futureData[areaPrices[0].i].x,
                         until: futureData[areaPrices[0].i + hourValue].x,
                         timestamp: futureData[areaPrices[0].i].timestamp,
                         bestPrice: futureData[areaPrices[0].i].y,
-                    });
+                    }));
                 } else {
                     areaPrices.reverse();
-                    setWorstTimeRange({
+                    dispatch(setWorstTimeRange({
                         from: futureData[areaPrices[0].i].x,
                         until: futureData[areaPrices[0].i + hourValue].x,
                         worstPrice: futureData[areaPrices[0].i].y,
-                    });
+                    }));
                 }
-
+                console.log('test');
                 setX1(9 + areaPrices[0].i);
                 const x2 = 9 + areaPrices[0].i + hourValue;
                 setX2(x2);
@@ -87,7 +87,7 @@ function Body({
                 setErrorMessage(error.message);
             }
         })();
-    }, [hourValue, data, setBestTimeRange, setWorstTimeRange, radioValue, selectedCountry, response]);
+    }, [hourValue, data, dispatch, radioValue, selectedCountry, response]);
 
     return (
         <>
