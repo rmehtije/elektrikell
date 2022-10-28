@@ -38,7 +38,7 @@ const reducer = createReducer(initialState, {
         state.radioValue = action.payload;
     },
     [setSelectedCountry]: (state, action) => {
-        state.radioValue = action.payload;
+        state.selectedCountry = action.payload;
     },
     [setBestTimeRange]: (state, action) => {
         state.bestTimeRange = action.payload;

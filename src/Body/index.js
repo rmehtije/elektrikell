@@ -11,7 +11,7 @@ import { setBestTimeRange, setWorstTimeRange } from '../services/stateService';
 function Body() {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({});
     const [response, setResponse] = useState(null);
     const [hourNowI, setHourNowI] = useState(0);
     const [x1, setX1] = useState(0);
@@ -37,9 +37,12 @@ function Body() {
                         timestamp: dataObject.timestamp,
                     };
                 });
-
-                if(!data) {
-                    setData(priceData);
+                
+                if(!data.country || (data.country && data.country !== selectedCountry.key)) {
+                    setData({
+                        priceData,
+                        country: selectedCountry.key,
+                    });
                     return;
                 }
 
@@ -60,6 +63,7 @@ function Body() {
                     }
                     return;
                 });
+
                 areaPrices.sort((a, b) => a.result - b.result);
                 if (radioValue === 'low') {
                     dispatch(setBestTimeRange({
@@ -95,7 +99,7 @@ function Body() {
                         <LineChart
                             width={500}
                             height={300}
-                            data={data}
+                            data={data.priceData}
                             margin={{
                                 top: 5,
                                 right: 30,
