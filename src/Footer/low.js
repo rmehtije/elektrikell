@@ -27,7 +27,7 @@ function Low() {
         { label: '6h', value: 6 },
         { label: '8h', value: 8 },
     ];
-    console.log(hours);
+
     useEffect(() => {
         const countDownUntil = moment.unix(bestTimeRange.timestamp).toDate();
         setTime(countDownUntil);
