@@ -17,6 +17,7 @@ function Header() {
     const [errorMessage, setErrorMessage] = useState('');
     const currentPrice = useSelector((state) => state.currentPrice);
     const selectedCountry = useSelector((state) => state.selectedCountry);
+    const hourValue = useSelector((state) => state.hourValue);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -47,7 +48,7 @@ function Header() {
 
     function handleOnChangePrice(event) {
         // event.preventDefault();
-        navigate(event.currentTarget.value);
+        navigate(event.currentTarget.value + `/${hourValue}`);
     }
 
     function handleOnSelectCountry(key, event) {
