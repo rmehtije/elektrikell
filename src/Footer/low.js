@@ -8,6 +8,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { setHourValue } from '../services/stateService';
 import { useParams, useNavigate } from 'react-router-dom';
+import { localUrl } from '../services/apiService';
 
 function Low() {
     const [showElement, setShowElement] = useState('countdown');
@@ -32,20 +33,19 @@ function Low() {
         const countDownUntil = moment.unix(bestTimeRange.timestamp).toDate();
         setTime(countDownUntil);
         dispatch(setHourValue(+hours || 1));
-    }, [bestTimeRange, hours, dispatch]);
-
-    function handleOnChange(event) {
-        const hour = event.currentTarget.value;
-
         if(bestTimeRange.timestamp > moment().unix()) {
             setShowElement('countdown');
         } else {
             setShowElement('right now');
         }
-        navigate('/low/' + hour);
+    }, [bestTimeRange, hours, dispatch]);
+
+    function handleOnChange(event) {
+        const hour = event.currentTarget.value;
+        navigate(localUrl + '/low/' + hour);
         dispatch(setHourValue(+hour));
     }
-
+    
     return (
         <div className="text-center">
             <Row>

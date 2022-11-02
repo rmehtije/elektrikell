@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+export const localUrl = '/elektrikell';
+
 const apiUrl = 'https://dashboard.elering.ee/api';
 
 export async function getCurrentPrice(selectedCountry) {
@@ -60,8 +62,7 @@ export function handleData(
     });
 
     areaPrices.sort((a, b) => a.result - b.result);
-
-    if (location.pathname.includes('/low') || location.pathname === '/') {
+    if (location.pathname.includes('/low') || !location.pathname.includes('/high')) {
         dispatch(setBestTimeRange({
             from: futureData[areaPrices[0].i].x,
             until: futureData[areaPrices[0].i + hourValue].x,
